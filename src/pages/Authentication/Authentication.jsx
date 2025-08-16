@@ -35,12 +35,12 @@ export default function Authentication(){
        const [userAluna, setUserAluna] = useState([]);
         useEffect(() => {
           setUserAluna(DatabaseDemo[0].alunas);
-          console.log(userAluna);
+          // console.log(userAluna);
         }, []);
          const [userProfessora, setUserProfessora] = useState([]);
         useEffect(() => {
           setUserProfessora(DatabaseDemo[1].professoras);
-          console.log(userProfessora);
+          // console.log(userProfessora);
         }, []);
 
       const [inputs, setInputs] = useState({
@@ -69,27 +69,8 @@ export default function Authentication(){
 
       const fazerCadastro = async e =>{
         e.preventDefault();
-        if(matricula.length < 12){
-            setVerificaMat("Matrícula aluna deve conter 12 números!")
-            return;
-        }else {
-            try {
-                const bodyCadastro = { nome, matricula, email, password };
-                const response = await axios.post(`${baseURL}/auth/cadastroAluna`, bodyCadastro, {
-                  headers: {
-                    "Content-type": "application/json"
-                  }
-                }
-                );
-                toast.success("Usuário criado com sucesso, faça o login"); 
-                const timer = setTimeout(() => {
-                  window.location.reload();
-                }, 3000); 
-              } catch (err) {
-                toast.error("Ocorreu um erro ao cadastrar usuário, tente novamente");
-              }
-        }
-    
+         toast.success("Usuário criado com sucesso, faça o login"); 
+           
       }
      const fazerLogin = async e => {
         e.preventDefault();
@@ -97,51 +78,13 @@ export default function Authentication(){
         const isAluna = selectedOption === "Aluna";
         const isProfessora = selectedOption === "Professora";
 
-        // if (isAluna && matricula.length < 12) {
-        //   setVerificaMat("Matrícula aluna deve conter 12 números!");
-        //   return;
-        // }
-
-        // if (isProfessora && matricula.length < 7) {
-        //   setVerificaMat("Matrícula professora deve conter 7 números!");
-        //   return;
-        // }
      if (isAluna) {
               navigate("/home");
             } else if (isProfessora) {
               navigate("/homeProfessor");     
               
             }
-        // try {
-        //       const body = { matricula, password };
-        // console.log(body);
-          // let endpoint = "";
-          
-          // if (isAluna) {
-
-          //   endpoint = "/auth/loginAluna";
-          // } else if (isProfessora) {
-          //   endpoint = "/auth/loginProfessora";
-          // }
-
-          // const response = await axios.post(`${baseURL}${endpoint}`, body, {
-          //   headers: {
-          //     "Content-type": "application/json"
-          //   }
-          // });
-
-          // const parseRes = await response.data;
-
-          // if (parseRes.jwtToken) {
-          //   localStorage.setItem("token", parseRes.jwtToken);
        
-          //   toast.success("Login realizado com sucesso!");
-          // } else {
-          //   toast.error('Ocorreu um erro ao fazer login, tente novamente.' + parseRes);
-          // }
-    //     } catch (err) {
-    //       toast.error('Matrícula ou senha incorreta, tente novamente');
-    //     }     
      }
     
     return (
@@ -159,17 +102,20 @@ export default function Authentication(){
                 placeholder="Nome" 
                 name="nome" 
                 value={nome}
+                disabled
                 onChange={e => onChange(e)}/>
                 <input type="email"
                 placeholder="Email" 
                 name="email"
                 value={email}
+                disabled
                 onChange={e => onChange(e)}/>
                 <input 
                 type="text" 
                 placeholder="Matrícula" 
                 name="matricula"
                 value={matricula}
+                disabled
                 required
                 maxLength={12}
                 minLength={7}
@@ -181,6 +127,7 @@ export default function Authentication(){
                 placeholder="Senha" 
                 name="password"
                 value={password}
+                disabled
                 onChange={e => onChange(e)}/>
                 
                 <button className="mt-2" type="submit">Registrar</button>
