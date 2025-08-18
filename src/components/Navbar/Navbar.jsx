@@ -11,8 +11,6 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import './Navbar.css'
 import { useEffect, useContext, useState} from 'react';
 import { toast } from 'react-toastify';
-import { userLogged } from "../../Service/userservice.js";
-import { UserContext } from '../../Context/UserContext.jsx'
 import DatabaseDemo from '../../../dataDemo.js';
 
 
@@ -26,38 +24,8 @@ export function NavbarC(){
     console.log(userAluna);
   }, []);
 
-  // const { user, setUser } = useContext(UserContext);
-  //   async function findUserLoggedAluno(){
-  //     try {
-  //       const response = userLogged();
-  //       console.log(response.userAluna[0]);
-  //       // setUser(response);
-        
-     
-  //     } catch (error) {
-  //       console.log(error);
-  //       // navigate("/");
-  //       // localStorage.removeItem("token");
-  //       // setUser(undefined);
-  //       toast.info("Sessão Encerrada, faça login novamente")
-  //     }
-  //   }
-  //   useEffect(() => {
-  //       findUserLoggedAluno();
-
-  //     // const token = localStorage.getItem("token");
-  //     // if (token && token!== '') {
-  //     //   findUserLoggedAluno();
-  //     // } else {
-  //     //   navigate("/")
-  //     //   toast.error("Acesso negado! Faça login corretamente.")
-  //     // }
-  //   }, []);
-
     const navigate = useNavigate();
         function signout() {
-      
-          
           navigate("/");
           toast.success("Logout com sucesso!")
         }

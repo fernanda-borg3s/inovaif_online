@@ -44,22 +44,22 @@ const router = createBrowserRouter([
         path: "/home",
         element:<Home/>,
       },
-      // {
-      //   path:"/home/encontrosDisponivel",
-      //   element:<EncontrosDisponivel/>
-      // },
-      // {
-      //   path:"/home/encontrosInscritos",
-      //   element:<EncontrosInscritos/>
-      // },
-      // {
-      //   path:"/home/agenda",
-      //   element:<Agenda/>
-      // },
-      // {
-      //   path:"/home/agendaInscrito",
-      //   element: <AgendaInscritos/>
-      // }
+      {
+        path:"/home/encontrosDisponivel",
+        element:<EncontrosDisponivel/>
+      },
+      {
+        path:"/home/encontrosInscritos",
+        element:<EncontrosInscritos/>
+      },
+      {
+        path:"/home/agenda",
+        element:<Agenda/>
+      },
+      {
+        path:"/home/agendaInscrito",
+        element: <AgendaInscritos/>
+      }
    
     ]
   },

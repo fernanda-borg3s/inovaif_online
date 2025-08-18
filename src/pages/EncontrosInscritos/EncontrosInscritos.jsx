@@ -13,50 +13,18 @@ import { userLogged } from "../../Service/userservice.js";
 import { toast } from "react-toastify";
 import { useEffect, useState, useContext} from 'react';
 import { UserContext } from '../../Context/UserContext.jsx'
-import axios from 'axios';
+import DatabaseDemo from "../../../dataDemo.js";
+
 
 const ITEMS_PER_PAGE = 24;
 
-const baseURL = 'http://localhost:3000'
-
 export default function EncontrosInscritos(){
-  const { user, setUser } = useContext(UserContext);
-  async function findUserLogged(){
-    try {
-      const response = await userLogged();
-      setUser(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-   }
-   useEffect(() => {
-    if (localStorage.getItem("token")) findUserLogged();
-  }, []);
-
-
       const [encontrosInscrito, setEncontrosInscrito] = useState([]);
-      const currentDate = new Date(); // Get the current date in JavaScript
-      const dataHoje = currentDate.toISOString().split('T')[0]; // Format the date as 'YYYY-MM-DD'
+      
       useEffect(() => {
-        const fetchEncontrosInscritos = async () => {
-          try {
-            const response = await axios.get(`${baseURL}/inscricao/inscritos/${user.id_aluna}/${dataHoje}`);  
-            setEncontrosInscrito(response.data.data);
-            console.log(response)
-            if(response.data.msg == "Não há inscrições realizadas pelo usuário"){
-              toast.info("Não há encontros inscritos!")
-
-            }
-          } catch (error) {
-            toast.error("Ocorreu um erro ao conectar ao servidor!")
-          }
-        };
-        
-        if(user){
-          fetchEncontrosInscritos();
-        }
-
-      }, [user.id_aluna, dataHoje]);
+        setEncontrosInscrito(DatabaseDemo[3].encontrosInscrito);
+       
+      }, []);
       
       function formatDate(dateString) {
         const datePart = dateString.substring(0, 10);
@@ -64,19 +32,12 @@ export default function EncontrosInscritos(){
         return `${parts[2]}-${parts[1]}-${parts[0]}`;
       }
 
-      const removerInscricao = async (id_inscricao) => {
-        
-          try {
-            const response = await axios.delete(`${baseURL}/inscricao/deleteinscricao/${id_inscricao}`);
-            toast.success("Inscrição excluída com sucesso!")
-            //limpa o card que foi excluido
+      const removerInscricao =  (id_inscricao) => {
+         //limpa o card que foi excluido
+          toast.success("Inscrição excluída com sucesso!")
             const updatedEncontrosInscritos = encontrosInscrito?.filter(item => item.id_inscricao !== id_inscricao);
             setEncontrosInscrito(updatedEncontrosInscritos);
-          } catch (error) {
-            // console.error(error);
-            toast.error("Ocorreu um erro ao excluir inscrição, tente novamente");
-            
-          }
+          
       }
       const [encontroInscritoCurrentPage, setEncontroInscritoCurrentPage] = useState(1);
       
@@ -93,8 +54,6 @@ export default function EncontrosInscritos(){
         encontroInscritoCurrentPage * ITEMS_PER_PAGE
       );
      
-     
-      
       const handleInscritoPageChange = (page) => {
         setEncontroInscritoCurrentPage(page);
       };

@@ -13,18 +13,7 @@ import { userLoggedProf } from "../../Service/userservice.js";
 import { UserContext } from '../../Context/UserContext.jsx'
 
   export default function Home(){
-          const { user, setUser } = useContext(UserContext);
-          async function findUserLoggedProf(){
-            try {
-              const response = await userLoggedProf();
-              setUser(response.data);
-            } catch (error) {
-              // console.log(error);
-            }
-          }
-          useEffect(() => {
-            if (localStorage.getItem("token")) findUserLoggedProf();
-          }, []);
+       
 
     return (
     <>
@@ -43,7 +32,7 @@ import { UserContext } from '../../Context/UserContext.jsx'
         <Container>
         <h2 className="mt-5 mb-4 h2-home">Agenda para Hoje</h2>
 
-        <CardHome user={user?.id_aluna}/>
+        <CardHome/>
 
         </Container>
         

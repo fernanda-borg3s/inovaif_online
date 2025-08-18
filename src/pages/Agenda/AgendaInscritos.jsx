@@ -3,55 +3,16 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Calendario from '../../components/Calendario/Calendario.jsx';
 import Footer from '../../components/Footer/Footer.jsx';
-// import { userLogged } from "../../Service/userservice.js";
-import { useEffect, useState, useContext} from 'react';
-import { toast } from 'react-toastify';
-import { UserContext } from '../../Context/UserContext.jsx'
-import axios from 'axios';
-
-const baseURL = 'http://localhost:3000'
-
+import { useEffect, useState} from 'react';
+import DatabaseDemo from "../../../dataDemo.js";
 
 export default function AgendaInscritos(){
-    //   const { user, setUser } = useContext(UserContext);
-  const { user } = useContext(UserContext);
+    const[dataEncontroInscrito, setDataEncontroInscrito] = useState([]);
 
-    //   async function findUserLoggedAluno(){
-    //     try {
-    //       const response = await userLogged();
-    //       setUser(response.data);
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    //   }
-    //   useEffect(() => {
-    //     if (localStorage.getItem("token")) findUserLoggedAluno();
-    //   }, []);
+    useEffect(() => {
+    setDataEncontroInscrito(DatabaseDemo[3].encontrosInscrito);
 
-     
-      const[dataEncontroInscrito, setDataEncontroInscrito] = useState([]);
-
-      useEffect(() =>{
-        const fetchDataEncontroInscrito = async() => {
-          try{
-            const response = await axios.get(`${baseURL}/agenda/dataInscrito/${user.id_aluna}`);
-            // console.log(response)
-            setDataEncontroInscrito(response.data.data)
-            if(response.data.msg == "Não há encontros inscritos agendado"){
-              toast.info("Não há encontros inscritos")
-    
-            }
-           
-          }catch(error){
-            toast.error("Ocorreu um erro ao conectar ao servidor, tente novamente mais tarde!")
-            
-          }
-        }
-        if(user){
-            fetchDataEncontroInscrito();
-        }
-         
-      }, [user.id_aluna])
+  }, []);
 
         const dadosEncontrosInscritos =  dataEncontroInscrito && dataEncontroInscrito.map((event) => {
           return {

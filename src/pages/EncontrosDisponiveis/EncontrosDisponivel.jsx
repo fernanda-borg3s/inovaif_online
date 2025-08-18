@@ -11,49 +11,23 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import './EncontrosDisponivel.css'
 import Paginacao from '../../components/Paginacao/Paginacao.jsx';
 import { toast } from "react-toastify";
-import { userLogged } from "../../Service/userservice.js";
 import { useEffect, useState, useContext} from 'react';
-import { UserContext } from '../../Context/UserContext.jsx'
-import axios from 'axios';
+import DatabaseDemo from "../../../dataDemo.js";
+
 const ITEMS_PER_PAGE = 24;
 
-const baseURL = 'http://localhost:3000'
 
 export default function EncontrosDisponivel(){
-  const { user, setUser } = useContext(UserContext);
-  const [encontrosDisponivel, setEncontrosDisponivel] = useState([]);
-  // const [qtdInscritosVaga, setQtdInscritosVagas] = useState([]);
-  // const [mesmoHorario, setMesmoHorario] = useState([]);
- 
-  async function findUserLogged(){
-    try {
-      const response = await userLogged();
-      setUser(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-   }
-   useEffect(() => {
-    if (localStorage.getItem("token")) findUserLogged();
-  }, []);
-
   const currentDate = new Date(); // Get the current date in JavaScript
+  
   const dataHoje = currentDate.toISOString().split('T')[0]; // Format the date as 'YYYY-MM-DD'
-  useEffect(() => {
-    const fetchEncontrosDisponivel = async () => {
-      try {
-        const response = await axios.get(`${baseURL}/encontros/encontrosDisponivel/${dataHoje}/${user.id_aluna}`);
-        setEncontrosDisponivel(response.data.data);
-        if(response.data.msg == "Não há encontros disponivel para o usuário"){
-          toast.info("Não há encontros disponível!")
+  const [encontrosDisponivel, setEncontrosDisponivel] = useState([]);
+   useEffect(() => {
+    setEncontrosDisponivel(DatabaseDemo[2].encontros);
 
-        }
-      } catch (error) {
-        toast.error("Ocorreu um erro ao conectar ao servidor, tente novamente mais tarde!")
-      }
-    };
-      fetchEncontrosDisponivel(); 
-    }, [user, dataHoje]); 
+  }, []);
+  
+
  
         function formatDate(dateString) {
           const datePart = dateString.substring(0, 10);
@@ -62,33 +36,10 @@ export default function EncontrosDisponivel(){
         }
         
       
-        const inscreverEncontro = async (id_encontro, num_vagas, hora_inicio, data_inicio) => {
-          try {
-            const response1 = await axios.get(`${baseURL}/inscricao/contadorNumVagas/${id_encontro}`);
-            const qtdInscritos = response1.data.data;
-            if (Number(qtdInscritos[0]) <= num_vagas) {
-              const id_aluna = user.id_aluna;
-              const response2 = await axios.get(`${baseURL}/inscricao/conferirHorario/${id_aluna}/${hora_inicio}/${data_inicio}`);
-              const mesmoHorario = response2.data.data;
-              if (Number(mesmoHorario[0]) > 0) {
-                toast.error("Você já tem um encontro para esse mesmo horário");
-              } else {
-                const bodyInscrever = { id_encontro, id_aluna };
-                await axios.post(`${baseURL}/inscricao/inscrever`, bodyInscrever, {
-                  headers: {
-                    "Content-type": "application/json"
-                  }
-                });
-                toast.success("Inscrição realizada com sucesso!");
-                setEncontrosDisponivel(encontrosDisponivel.filter((item) => item.id_encontro !== id_encontro));
-              }
-            } else {
-              toast.error("Não há mais vagas nesse encontro!");
-            }
-          } catch (error) {
-            console.error(error);
-            toast.error("Ocorreu um erro ao fazer inscrição, tente novamente");
-          }
+        const inscreverEncontro = (id_encontro) => {
+           toast.success("Inscrição realizada com sucesso!");
+          setEncontrosDisponivel(encontrosDisponivel.filter((item) => item.id_encontro !== id_encontro));
+       
         }
         const [encontroDisponivelCurrentPage, setEncontroDisponivelCurrentPage] = useState(1);
       
@@ -169,7 +120,7 @@ export default function EncontrosDisponivel(){
                             
                           </Card.Body>
                           <Card.Footer className="card-footer-disponivel"> 
-                          <Button variant="success" style={{fontWeight:'bold'}} onClick={() => inscreverEncontro(encontro.id_encontro, encontro.num_vagas, encontro.hora_inicio, encontro.data_inicio)}>
+                          <Button variant="success" style={{fontWeight:'bold'}} onClick={() => inscreverEncontro(encontro.id_encontro)}>
                               Inscrever
                             </Button>
                           </Card.Footer>

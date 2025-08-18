@@ -3,51 +3,18 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Calendario from '../../components/Calendario/Calendario';
 import Footer from '../../components/Footer/Footer';
-// import { userLogged } from "../../Service/userservice.js";
 import { useEffect, useState, useContext} from 'react';
-import { toast } from 'react-toastify';
-import { UserContext } from '../../Context/UserContext.jsx'
-import axios from 'axios';
-
-const baseURL = 'http://localhost:3000'
+import DatabaseDemo from "../../../dataDemo.js";
 
 
 export default function Agenda(){
-      // const { user, setUser } = useContext(UserContext);
-  const { user } = useContext(UserContext);
-
-      // async function findUserLoggedAluno(){
-      //   try {
-      //     const response = await userLogged();
-      //     setUser(response.data);
-      //   } catch (error) {
-      //     console.log(error);
-      //   }
-      // }
-      // useEffect(() => {
-      //   if (localStorage.getItem("token")) findUserLoggedAluno();
-      // }, []);
-
+      
       const[dataEncontroDisponivel, setDataEncontroDisponivel] = useState([]);
 
-      useEffect( ()=>{
-        const fetchDataEncontroDisponivel = async() =>{
-          try{
-            const response = await axios.get(`${baseURL}/agenda/datas/${user.id_aluna}`)
-            // console.log(response)
-            setDataEncontroDisponivel(response.data.data)
-            if(response.data.msg == "Não há encontros disponiveis agendado"){
-              toast.info("Não há encontros disponíveis!")
-    
-            }
-          }catch(error){
-            toast.error("Ocorreu um erro ao conectar ao servidor, tente novamente mais tarde!")
-          }
-        }
-        if(user){
-          fetchDataEncontroDisponivel();
-        }
-      }, [user.id_aluna]);
+  useEffect(() => {
+    setDataEncontroDisponivel(DatabaseDemo[2].encontros);
+
+  }, []);
 
       //objeto para o calendario
         const events =  dataEncontroDisponivel && dataEncontroDisponivel.map((event) => {

@@ -6,56 +6,24 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import './CardHome.css'
 import { toast } from 'react-toastify';
 
-import { useEffect, useState, useContext} from 'react';
+import { useEffect, useState} from 'react';
+import DatabaseDemo from "../../../dataDemo.js";
 
-import axios from 'axios';
 
-const baseURL = 'http://localhost:3000'
 export default function CardHome({ user }){
 
 const [encontrosHoje, setEncontrosHoje] = useState([]);
 const currentDate = new Date(); // Get the current date in JavaScript
 const dataHoje = currentDate.toISOString().split('T')[0]; // Format the date as 'YYYY-MM-DD'
   useEffect(() => {
-    const fetchEncontros = async () => {
-      
-      try {
-        const response = await axios.get(`${baseURL}/agenda/encontroHoje/${user}/${dataHoje}`);
-      
-        setEncontrosHoje(response.data.data);
-        if(response.data.msg == "Não encontros para data de hoje"){
-          toast.info("Não há encontros marcados para hoje!")
+    setEncontrosHoje(DatabaseDemo[4].encontrosHoje);
+  }, []); 
 
-        }
-      } catch (error) {
-        toast.error("Ocorreu um erro ao conectar ao servidor, tente novamente mais tarde!")
-      }
-    };
-    if(user){
-      fetchEncontros();
-
-    }
-  }, [user, dataHoje]); 
-
-  const removerInscricao = async (id_inscricao, hora_inicio) => {
- 
-    const horaAtual = new Date().getHours();
-    const mm = Number(hora_inicio.toString().slice(0,2))
-      if (horaAtual <= mm) {
-        try {
-          const response = await axios.delete(`${baseURL}/inscricao/deleteinscricao/${id_inscricao}`);
-          toast.success("Inscrição excluída com sucesso!")
-          //limpa o card que foi excluido
-          const updatedEncontrosInscritos = encontrosHoje?.filter(item => item.id_inscricao !== id_inscricao);
-          setEncontrosHoje(updatedEncontrosInscritos);
-        } catch (error) {
-          toast.error("Ocorreu um erro ao excluir inscrição, tente novamente");
-          
-        }
-      
-      } else {
-        toast.info("Encontro não pode ser cancelado pois já foi iniciado ou finalizado!")
-      }
+  const removerInscricao = async (id_inscricao) => {
+    toast.success("Inscrição excluída com sucesso!")
+    //limpa o card que foi excluido
+    const updatedEncontrosInscritos = encontrosHoje?.filter(item => item.id_inscricao !== id_inscricao);
+    setEncontrosHoje(updatedEncontrosInscritos);
     
 }
 
