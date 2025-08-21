@@ -39,7 +39,7 @@ export default function Agenda(){
       
   return (
         <>
-          <Container fluid="md">
+          <Container fluid="md" style={{minHeight:'90vh'}}>
             <h1 style={{margin:'30px 0', color:'#004d2a', fontWeight:'bold', textAlign:'center'}}>Sua Agenda</h1>
               <Row >
                 <h2 style={{color:'#2B9EB3'}}>Encontros Disponíveis</h2>

@@ -1,7 +1,9 @@
 .cardInscrito-container{
     min-height:500px ;
-    max-height: auto;
+    /* max-height: auto; */
     width: 26rem;
+    max-width: 100%;
+    min-width: 350px;
 }
 .cardInscrito-container span{
     font-weight: 500;

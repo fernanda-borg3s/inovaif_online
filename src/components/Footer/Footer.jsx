@@ -5,7 +5,7 @@ export default function Footer(){
         <>
         <footer className="footer">
             <div>
-                IFB | 2024
+                2024
             </div>
             <div>
                 &copy; Desenvolvido por <a className='a-footer' href='https://github.com/fernanda-borg3s' target='_blank'>Fernanda Borges</a>

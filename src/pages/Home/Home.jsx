@@ -37,7 +37,7 @@ import { UserContext } from '../../Context/UserContext.jsx'
         </Container>
         
         <Container className="box-container mt-5">
-          <h2 className='mt-5 mb-4 h2-home'>Todos Encontros</h2>
+          <h2 className='mt-5 mb-4 h2-home hide-img-home'>Todos Encontros</h2>
           <Row>
        
         <Col className='hide-img-home mt-2'>

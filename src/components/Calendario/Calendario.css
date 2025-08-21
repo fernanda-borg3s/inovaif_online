@@ -16,3 +16,8 @@ a {
 .bi-caret-down-fill{
     font-size: 10px;
 }
+.fc .fc-toolbar{
+    flex-wrap: wrap;
+    gap: 10px;
+}
+

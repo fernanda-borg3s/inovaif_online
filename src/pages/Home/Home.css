@@ -28,6 +28,7 @@
 .btn2-home{
     font-weight: bold;
     background-color: #004d2a;
-    width: 43%;
+    max-width: 43%;
+    
     
 }
