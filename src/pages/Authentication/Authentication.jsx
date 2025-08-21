@@ -6,13 +6,14 @@ import { toast } from "react-toastify";
 import Form from 'react-bootstrap/Form';
 import './Authentication.css'
 import  { useRef, useState, useContext, useEffect } from 'react';
+import { UserContext } from '../../Context/UserContext.jsx'
 import DatabaseDemo from "../../../dataDemo.js";
 import { useNavigate } from "react-router-dom";
 
 
 export default function Authentication(){
   const navigate = useNavigate();
-
+  const { user, setUser } = useContext(UserContext);
 
     const [selectedOption, setSelectedOption] = useState("Aluna");
     const [verificaMat, setVerificaMat] = useState("")
@@ -47,7 +48,8 @@ export default function Authentication(){
       });
     
       const { matricula, password, nome, email } = inputs;
-  
+    //   // const onChange = e =>
+    //   //   setInputs({ ...inputs, [e.target.name]: e.target.value });
      if(selectedOption === "Aluna"){
      
       inputs.matricula = "1234567891012" 
@@ -58,6 +60,9 @@ export default function Authentication(){
       inputs.matricula = "0000000"
       inputs.password = "*******" 
      }
+
+      // console.log(inputs);
+      
 
       const fazerCadastro = async e =>{
         e.preventDefault();
@@ -86,7 +91,6 @@ export default function Authentication(){
         <div  ref={containerRef} className='box'>
             <div className="form-container sign-up-container">
             <Image src={LogoLogin} style={{width:'100px'}} className="p-3 mb-2"/>
-              
 
                 <form  className="form-login" method="post" onSubmit={fazerCadastro}>
                 <h1 style={{color:'#004d2a', fontSize:'25px', fontWeight:'bold'}} className="mt-2">Crie sua conta</h1>
