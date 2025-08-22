@@ -16,7 +16,7 @@ export default function Authentication(){
   const { user, setUser } = useContext(UserContext);
 
     const [selectedOption, setSelectedOption] = useState("Aluna");
-    const [verificaMat, setVerificaMat] = useState("")
+    // const [verificaMat, setVerificaMat] = useState("")
     const [isActive, setIsActive] = useState(false);
     const containerRef = useRef(null);
     const SingUpClick = () => {
@@ -41,10 +41,10 @@ export default function Authentication(){
         }, []);
 
       const [inputs, setInputs] = useState({
-        matricula: "1234567891012",
-        password: "*******",
-        nome: "Fox Student",
-        email: "foxstudent@gmail.com",
+        matricula: "",
+        password: "",
+        nome: "",
+        email: "",
       });
     
       const { matricula, password, nome, email } = inputs;
@@ -163,7 +163,7 @@ export default function Authentication(){
                 minLength={7}
                 disabled
                 />
-                <span className="verficar-mat p-1">{verificaMat}</span>
+                {/* <span className="verficar-mat p-1">{verificaMat}</span> */}
                 <input 
                 type="password" 
                 placeholder="Senha"

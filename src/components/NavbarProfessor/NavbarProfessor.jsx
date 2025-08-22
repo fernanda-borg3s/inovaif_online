@@ -21,37 +21,12 @@ export function NavbarProfessor(){
     setUserProfessora(DatabaseDemo[1].professoras);
     console.log(userProfessora);
   }, []);
-  // const { user, setUser } = useContext(UserContext);
-  //   const navigate = useNavigate();
-  //   async function findUserLoggedProf(){
-  //     try {
-  //       const response = await userLoggedProf();
-  //       setUser(response.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //       navigate("/");
-  //       localStorage.removeItem("token");
-  //       setUser(undefined);
-  //       toast.info("Sessão Encerrada, faça login novamente")
-  //     }
-  //   }
- 
+    const navigate = useNavigate();
       function signout() {
-        localStorage.removeItem("token");
-        setUser(undefined);
-        navigate("/");
-        toast.success("Logout com sucesso")
+         navigate("/");
+          toast.success("Logout com sucesso!")
       }
-  //     //VERIFICA SE O USUÁRIO TEM TOKEN
-  //     useEffect(() => {
-  //       const token = localStorage.getItem("token");
-  //       if (token && token!== '') {
-  //         findUserLoggedProf();
-  //       } else {
-  //         navigate("/")
-  //         toast.error("Acesso negado! Faça login corretamente.")
-  //       }
-  //     }, []);
+
     return (
        <>
           {['sm'].map((expand) => (
