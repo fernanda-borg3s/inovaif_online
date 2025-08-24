@@ -41,6 +41,9 @@
 }
 div.text{
     margin-left: -60px;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
 }
 button.a-errorPage {
     width: 250px;
@@ -53,4 +56,19 @@ button.a-errorPage {
 .a-errorPage a{
     color: #fff;
 
+}
+
+@media (width <= 45em){
+    #error-page{
+        flex-direction: column;
+    }
+  
+    div.text{
+    margin-left: 0px;
+    margin-top: -70px;
+    align-items: center;
+    & .p-errorPage.mt-4{
+       text-align: center;
+    }
+    }
 }
